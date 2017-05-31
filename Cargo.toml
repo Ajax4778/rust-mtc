@@ -1,0 +1,6 @@
+[package]
+name = "mtc"
+version = "0.1.0"
+authors = ["Ajax Manohar"]
+
+[dependencies]
