@@ -12,7 +12,7 @@ mod mtc {
         let ut_julian = UT_JULIAN_UNIX + days_since_unix(UTC::now());
         let days_since_2000 = ut_julian - TT_JULIAN_2000 + (UT_TT_SECONDS_OFFSET / SECONDS_IN_DAY);
 
-        mars_time(mars_sol_date(days_since_2000))
+        format(mars_sol_date(days_since_2000))
     }
 
     fn days_since_unix(datetime: DateTime<UTC>) -> f64 {
@@ -25,7 +25,9 @@ mod mtc {
         ((days_since_2000 - 4.5) / 1.027491252) + 44_796_f64 - 0.00096
     }
 
-    fn mars_time(mars_date: f64) -> String {
+    fn format(mars_date: f64) -> String {
+        let date = mars_date.ceil();
+
         let hours = (24_f64 * mars_date) % 24_f64;
         let h = hours.floor();
 
@@ -34,6 +36,6 @@ mod mtc {
 
         let seconds = (minutes - m) * 60.0;
         let s = seconds.floor();
-        format!("{}:{}:{}", h, m, s)
+        format!("{:02}:{:02}:{:02} on Mars Sol Date {}", h, m, s, date)
     }
 }
