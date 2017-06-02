@@ -1,5 +1,6 @@
 mod mtc {
     extern crate chrono;
+    use self::chrono::prelude::*;
 
     const UT_JULIAN_UNIX: f64 = 2_440_587.5;
     const TT_JULIAN_2000: f64 = 2_451_545.0;
@@ -7,21 +8,16 @@ mod mtc {
 
     const SECONDS_IN_DAY: f64 = 86_400.0;
 
-
     pub fn now() -> String {
-        let ut_julian = UT_JULIAN_UNIX + days_since_unix();
+        let ut_julian = UT_JULIAN_UNIX + days_since_unix(UTC::now());
         let days_since_2000 = ut_julian - TT_JULIAN_2000 + (UT_TT_SECONDS_OFFSET / SECONDS_IN_DAY);
 
         mars_time(mars_sol_date(days_since_2000))
     }
 
-    fn days_since_unix() -> f64 {
-        use self::chrono::prelude::*;
-
+    fn days_since_unix(datetime: DateTime<UTC>) -> f64 {
         let unix = UTC.ymd(1970, 1, 1).and_hms(0, 0, 0);
-        let now = UTC::now();
-
-        let mills = now.signed_duration_since(unix).num_milliseconds() as f64;
+        let mills = datetime.signed_duration_since(unix).num_milliseconds() as f64;
         mills / (SECONDS_IN_DAY * 1000_f64)
     }
 
