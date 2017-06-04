@@ -15,6 +15,13 @@ mod mtc {
         format(mars_sol_date(days_since_2000))
     }
 
+    pub fn at(datetime: DateTime<UTC>) -> String {
+        let ut_julian = UT_JULIAN_UNIX + days_since_unix(datetime);
+        let days_since_2000 = ut_julian - TT_JULIAN_2000 + (UT_TT_SECONDS_OFFSET / SECONDS_IN_DAY);
+
+        format(mars_sol_date(days_since_2000))
+    }
+
     fn days_since_unix(datetime: DateTime<UTC>) -> f64 {
         let unix = UTC.ymd(1970, 1, 1).and_hms(0, 0, 0);
         let mills = datetime.signed_duration_since(unix).num_milliseconds() as f64;
