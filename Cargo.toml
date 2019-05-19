@@ -1,6 +1,11 @@
 [package]
 name = "mtc"
-version = "0.1.0"
-authors = ["Ajax Manohar"]
+version = "0.0.1"
+authors = ["Ajax"]
+description = "Coordinated Mars Time"
+license = "MIT"
+homepage = "https://github.com/ajaxm/rust-mtc"
+repository = "https://github.com/ajaxm/rust-mtc"
 
 [dependencies]
+chrono = "0.4"
